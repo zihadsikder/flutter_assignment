@@ -23,31 +23,60 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
-        elevation: 0,
+        toolbarHeight: 100,
+        backgroundColor: Colors.green,
+        leading: Icon(Icons.menu),
+        title: Text("Home"),
+        actions: [
+          Icon(Icons.search)
+        ],
+        elevation: 70,
+
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.account_circle_outlined, color: Colors.green,size: 40,),
-
-            SizedBox(height: 16),
             Text(
-              "John Doe",
+              "This is mod 5 Assignment ",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.green,
+                //color: Colors.green,
               ),
             ),
             SizedBox(height: 8),
-            Text(
-              "Flutter Batch 4",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.blue,
+            RichText(text:
+            TextSpan(
+              text: "My ",
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.red,
+            ),
+              children: [
+                TextSpan(
+                  text: "phone ",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.blue,
+                  ),
+                ),
+                TextSpan(
+                    text: "name ",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.purple,
+                    ),
+                ),
+                TextSpan(
+                  text: "Redmi Note 8 Pro",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.yellow.shade900,
+                  ),
+                ),
+              ],
               ),
             ),
           ],
