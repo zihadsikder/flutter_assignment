@@ -23,65 +23,42 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
-        backgroundColor: Colors.green,
-        leading: Icon(Icons.menu),
-        title: Text("Home"),
-        actions: [
-          Icon(Icons.search)
-        ],
-        elevation: 70,
 
+        title: Text("My Shooping List"),
+        actions: [
+          Icon(Icons.shopping_cart)
+        ],
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "This is mod 5 Assignment ",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                //color: Colors.green,
-              ),
-            ),
-            SizedBox(height: 8),
-            RichText(text:
-            TextSpan(
-              text: "My ",
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.red,
-            ),
-              children: [
-                TextSpan(
-                  text: "phone ",
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.blue,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+          child: (
+              ListView(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text('Apple'),
                   ),
-                ),
-                TextSpan(
-                    text: "name ",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.purple,
-                    ),
-                ),
-                TextSpan(
-                  text: "Redmi Note 8 Pro",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.yellow.shade900,
+                  ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text('Bananas'),
                   ),
-                ),
-              ],
-              ),
-            ),
-          ],
-        ),
-      ),
+                  ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text('Bread'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text('Milk'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text('Eggs'),
+                  ),
+                ],
+              )
+          ),
+          ),
     );
   }
 }
