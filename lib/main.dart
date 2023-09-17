@@ -207,7 +207,7 @@ class Home extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
             Text(
@@ -271,7 +271,7 @@ class Home extends StatelessWidget {
                   ),
                   ListTile(
                     leading: ClipOval(
-                        child: Image.asset('assets/bbbb.png',
+                        child: Image.asset('assets/blood.png',
                           fit: BoxFit.cover,
                         )
                     ),
@@ -279,7 +279,11 @@ class Home extends StatelessWidget {
                     subtitle: Text('Descroption for Photo 2'),
                   ),
                   ListTile(
-                    leading: Icon(Icons.image),
+                    leading:  ClipOval(
+                        child: Image.asset('assets/blood.png',
+                          fit: BoxFit.cover,
+                        )
+                    ),
                     title: Text('Photo 3'),
                     subtitle: Text('Description for Photo 3'),
                   ),
