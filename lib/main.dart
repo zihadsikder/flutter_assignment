@@ -8,86 +8,86 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Counting App',
+      title: 'flutter app',
       debugShowCheckedModeBanner: false,
-      home: CountingScreen(),
+      home: Home(),
     );
   }
 }
 
-class CountingScreen extends StatefulWidget {
+class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
-  _CountingScreenState createState() => _CountingScreenState();
+  State<Home> createState() => _HomeState();
 }
 
-class _CountingScreenState extends State<CountingScreen> {
-  int count = 0;
-
-  void incrementCount() {
-    setState(() {
-      count++;
-      if (count >= 5) {
-        showCountDialog(count);
-      }
-    });
-  }
-
-  void decrementCount() {
-    setState(() {
-      if (count > 0) {
-        count--;
-      }
-    });
-  }
-
-  void showCountDialog(int count) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Button pressed $count times'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-            child: Text('Counting App')),
+        title: Text('Profile'),
+        backgroundColor: Colors.red,
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Count: $count',
-              style: TextStyle(fontSize: 24),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Container(
+                height: 300,
+                width: 300,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/zihad.jpg'),
+                  ),
+                ),
+              ),
             ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: incrementCount,
-                  child: Text('+'),
-                ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: decrementCount,
-                  child: Text('-'),
-                ),
-              ],
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Zihad Sikder',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Container(
+              child: Column(
+                children: [
+                  Text('ostad app'),
+                ],
+              ),
+            ),
+            Expanded(
+              child: OrientationBuilder(
+                builder: (context, orientation) {
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: isPortrait ? 3 : 4,
+                    ),
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return GridTile(
+                          child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                          image: DecorationImage(
+                          image: AssetImage('assets/zihad.jpg'), // Your image path
+                      fit: BoxFit.cover, // You can choose the fit option as needed
+                      ),
+                      ),
+                      ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
