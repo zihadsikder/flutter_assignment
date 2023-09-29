@@ -10,88 +10,77 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'flutter app',
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: ImageFeed(),
     );
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
 
-  @override
-  State<Home> createState() => _HomeState();
-}
+class ImageFeed extends StatelessWidget {
+  final List<String> imageUrls = List.generate(
+    20,
+        (index) => 'assets/download.jpeg',
+  );
 
-class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: Colors.red,
+        title: Text('Image Feed'),
+        backgroundColor: Colors.yellowAccent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Center(
-              child: Container(
-                height: 300,
-                width: 300,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/zihad.jpg'),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Zihad Sikder',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  Text('ostad app'),
-                ],
-              ),
-            ),
-            Expanded(
-              child: OrientationBuilder(
-                builder: (context, orientation) {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: isPortrait ? 3 : 4,
-                    ),
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return GridTile(
-                          child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                          image: DecorationImage(
-                          image: AssetImage('assets/zihad.jpg'), // Your image path
-                      fit: BoxFit.cover, // You can choose the fit option as needed
-                      ),
-                      ),
-                      ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          return orientation == Orientation.portrait
+              ? buildPortrait()
+              : buildLandscape();
+        },
       ),
+    );
+  }
+
+  Widget buildPortrait() {
+    return ListView.builder(
+      itemCount: imageUrls.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Container(
+            // width: 150,
+            // height: 150,
+            child: Center(
+              child: Image.asset(
+                imageUrls[index],
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildLandscape() {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, // Adjust the number of columns as needed
+      ),
+      itemCount: imageUrls.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Container(
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imageUrls[index]),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
