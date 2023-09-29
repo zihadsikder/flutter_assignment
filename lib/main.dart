@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
+import 'package:device_preview/device_preview.dart';
+void main() => runApp(
+DevicePreview(
+enabled: true,
+builder: (context) => MyApp(), // Wrap your app
+),
+);
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'flutter app',
-      debugShowCheckedModeBanner: false,
-      home: Home(),
+    return DevicePreview(
+      builder: (context) {
+        return MaterialApp(
+          useInheritedMediaQuery: true,
+          title: 'flutter app',
+          debugShowCheckedModeBanner: false,
+          home: Home(),
+        );
+      }
     );
   }
 }
@@ -25,7 +33,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,32 +66,26 @@ class _HomeState extends State<Home> {
               'Zihad Sikder',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            Container(
-              child: Column(
-                children: [
-                  Text('ostad app'),
-                ],
-              ),
+            SizedBox(
+              height: 8,
             ),
+            Text(
+                'Iam a student of world university of Bangladesh. CSE Department. I love cooding'),
+            SizedBox(height: 8,),
             Expanded(
               child: OrientationBuilder(
                 builder: (context, orientation) {
                   return GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: isPortrait ? 3 : 4,
+                      crossAxisCount: isPortrait ? 3 : 3,
                     ),
                     itemCount: 6,
                     itemBuilder: (context, index) {
                       return GridTile(
-                          child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                          image: DecorationImage(
-                          image: AssetImage('assets/zihad.jpg'), // Your image path
-                      fit: BoxFit.cover, // You can choose the fit option as needed
-                      ),
-                      ),
-                      ),
+                        child: Container(
+                          child: Image.asset('assets/zihad.jpg'),
+                        ),
                       );
                     },
                   );
