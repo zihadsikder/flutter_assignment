@@ -10,77 +10,73 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'flutter app',
       debugShowCheckedModeBanner: false,
-      home: ImageFeed(),
+      home: SizeSelector(),
     );
   }
 }
 
+class SizeSelector extends StatefulWidget {
+  @override
+  _SizeSelectorState createState() => _SizeSelectorState();
+}
 
-class ImageFeed extends StatelessWidget {
-  final List<String> imageUrls = List.generate(
-    20,
-        (index) => 'assets/download.jpeg',
-  );
+class _SizeSelectorState extends State<SizeSelector> {
+  String selectedSize = '';
+  final List<String> sizes = ['X', 'L', 'M', 'XL', 'XXL', 'XXXL'];
+
+  void _onSizeButtonPressed(String size) {
+    setState(() {
+      selectedSize = size;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Selected Size: $size'),
+      ),
+    );
+  }
+
+  ElevatedButton _buildSizeButton(String size) {
+    final isSelected = selectedSize == size;
+    return ElevatedButton(
+      onPressed: () => _onSizeButtonPressed(size),
+      child: Text(size),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          isSelected ? Colors.green : Colors.blue,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Feed'),
-        backgroundColor: Colors.yellowAccent,
+        title: Text('Select Size'),
+        backgroundColor: Colors.green,
       ),
-      body: OrientationBuilder(
-        builder: (context, orientation) {
-          return orientation == Orientation.portrait
-              ? buildPortrait()
-              : buildLandscape();
-        },
-      ),
-    );
-  }
-
-  Widget buildPortrait() {
-    return ListView.builder(
-      itemCount: imageUrls.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: Container(
-            // width: 150,
-            // height: 150,
-            child: Center(
-              child: Image.asset(
-                imageUrls[index],
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
+      body: Center(
+        child: Column(
+          children: [
+            Center(
+              child: ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: [
+                  for (int i = 0; i < 4; i++) _buildSizeButton(sizes[i]),
+                ],
               ),
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget buildLandscape() {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3, // Adjust the number of columns as needed
-      ),
-      itemCount: imageUrls.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imageUrls[index]),
-                fit: BoxFit.cover,
+            Center(
+              child: ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: [
+                  for (int i = 4; i < sizes.length; i++) _buildSizeButton(sizes[i]),
+                ],
               ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 }
